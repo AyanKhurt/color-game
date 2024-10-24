@@ -1,0 +1,195 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Game with Timer</title>
+    <style>
+        #id1 {
+            height: 100px;
+            width: 100px;
+            background-color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        #record {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="id1"></div>
+    <div id="timer">Time left: 60s</div>
+    <h1>Record</h1>
+    <div id="record"></div>
+
+    <script>
+        let countdown = 60; // Set initial countdown to 60 seconds
+
+        // Function to change color and number in the div
+        function colorgame() {
+            let randomnum = Math.floor(Math.random() * 10);
+
+            // Change the background color based on the random number
+            if (randomnum <= 1) {
+                document.getElementById("id1").style.backgroundColor = "black";
+            } else if (randomnum <= 2) {
+                document.getElementById("id1").style.backgroundColor = "red";
+            } else if (randomnum <= 3) {
+                document.getElementById("id1").style.backgroundColor = "blue";
+            } else if (randomnum <= 4) {
+                document.getElementById("id1").style.backgroundColor = "green";
+            } else if (randomnum <= 5) {
+                document.getElementById("id1").style.backgroundColor = "yellow";
+            } else if (randomnum <= 6) {
+                document.getElementById("id1").style.backgroundColor = "purple";
+            } else if (randomnum <= 7) {
+                document.getElementById("id1").style.backgroundColor = "orange";
+            } else if (randomnum <= 8) {
+                document.getElementById("id1").style.backgroundColor = "pink";
+            } else if (randomnum <= 9) {
+                document.getElementById("id1").style.backgroundColor = "cyan";
+            } else {
+                document.getElementById("id1").style.backgroundColor = "brown";
+            }
+
+            // Display the random number inside the circle
+            document.getElementById("id1").innerText = randomnum;
+
+            // Append the random number to the "Record" section
+            document.getElementById("record").innerText += `, ${randomnum}`;
+        }
+
+        // Function to handle countdown
+        function startCountdown() {
+            let timer = setInterval(function () {
+                countdown--;
+                document.getElementById("timer").innerText = `Time left: ${countdown}s`;
+
+                if (countdown <= 0) {
+                    colorgame(); // Change color and random number when countdown reaches 0
+                    countdown = 60; // Reset countdown to 60 seconds
+                }
+            }, 1000); // Update every second
+        }
+
+        // Reset the game when the page is loaded
+        window.onload = function() {
+            countdown = 60; // Reset countdown to 60 seconds on page load
+            document.getElementById("timer").innerText = `Time left: ${countdown}s`; // Display countdown
+            document.getElementById("record").innerText = ''; // Clear previous record on refresh
+            colorgame();  // Run the function once immediately when the page loads
+            startCountdown(); // Start the timer
+        }
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Game with Timer</title>
+    <style>
+        #id1 {
+            height: 100px;
+            width: 100px;
+            background-color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        #record {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="id1"></div>
+    <div id="timer">Time left: 60s</div>
+    <h1>Record</h1>
+    <div id="record"></div>
+
+    <script>
+        let countdown = 60;
+        let timerInterval; 
+
+        function colorgame() {
+            let randomnum = Math.floor(Math.random() * 10);
+
+            if (randomnum <= 1) {
+                document.getElementById("id1").style.backgroundColor = "black";
+            } else if (randomnum <= 2) {
+                document.getElementById("id1").style.backgroundColor = "red";
+            } else if (randomnum <= 3) {
+                document.getElementById("id1").style.backgroundColor = "blue";
+            } else if (randomnum <= 4) {
+                document.getElementById("id1").style.backgroundColor = "green";
+            } else if (randomnum <= 5) {
+                document.getElementById("id1").style.backgroundColor = "yellow";
+            } else if (randomnum <= 6) {
+                document.getElementById("id1").style.backgroundColor = "purple";
+            } else if (randomnum <= 7) {
+                document.getElementById("id1").style.backgroundColor = "orange";
+            } else if (randomnum <= 8) {
+                document.getElementById("id1").style.backgroundColor = "pink";
+            } else if (randomnum <= 9) {
+                document.getElementById("id1").style.backgroundColor = "cyan";
+            } else {
+                document.getElementById("id1").style.backgroundColor = "brown";
+            }
+
+            document.getElementById("id1").innerText = randomnum;
+
+            let currentRecord = localStorage.getItem('record') || ''; 
+            currentRecord += `, ${randomnum}`;
+            document.getElementById("record").innerText = currentRecord;
+            localStorage.setItem('record', currentRecord); 
+        }
+
+        function startCountdown() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            countdown = 60;
+            document.getElementById("timer").innerText = `Time left: ${countdown}s`;
+
+            timerInterval = setInterval(function () {
+                countdown--;
+                document.getElementById("timer").innerText = `Time left: ${countdown}s`;
+
+                if (countdown <= 0) {
+                    colorgame();
+                    countdown = 60;
+                }
+            }, 1000);
+        }
+
+        window.onload = function() {
+            let storedRecord = localStorage.getItem('record') || '';
+            document.getElementById("record").innerText = storedRecord;
+
+            colorgame();
+            startCountdown();
+        }
+    </script>
+</body>
+</html>
